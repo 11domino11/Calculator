@@ -5,26 +5,56 @@ let sumOneNum;
 let sumTwoNum;
 let finalNum;
 let equalLastHit;
+let firstPress = true;
 
 const displayPic = document.querySelector('.Display');
 const displayNums = document.createElement('p');
 displayNums.textContent = '0';
 displayPic.appendChild(displayNums);
+console.log(sumTwoArray);
 
 function clickedFunction(num){
-    if(num <= 10){
-        if (operator == null){
+    if(num <= 9){
+        console.log(sumTwoArray);
+        if (operator == null && firstPress == false){
             sumOneArray.push(num);
             sumOneNum = Number(sumOneArray.join(''));
             parseInt(sumOneNum);
             displayNums.textContent = (sumOneNum);
-        }else{
+        }
+        if (operator == null && firstPress == true){
+            sumOneArray = [];
+            sumOneArray.push(num);
+            sumOneNum = Number(sumOneArray.join(''));
+            parseInt(sumOneNum);
+            displayNums.textContent = (sumOneNum);
+            firstPress = false;
+        }else if(operator !=null){
+            firstPress = false;
             sumTwoArray.push(num);
             sumTwoNum = Number(sumTwoArray.join(''));
             parseInt(sumTwoNum);
             displayNums.textContent = (sumTwoNum);
         }
-    }if(num == 13){
+    }
+    if(num == 10){
+        console.log(sumTwoArray);
+        if(sumTwoArray == []){
+            firstPress = false;
+            sumOneArray.push('.');
+            sumOneNum = Number(sumOneArray.join(''));
+            parseInt(sumOneNum);
+            displayNums.textContent = (sumOneNum);
+        }else if(sumTwoArray != []){
+            firstPress = false;
+            sumTwoArray.push('.');
+            sumTwoNum = Number(sumTwoArray.join(''));
+            parseInt(sumTwoNum);
+            displayNums.textContent = (sumTwoNum);
+        }   
+    }
+    
+    if(num == 13){
         operator = '+';
         sumOneNum = Number(sumOneArray.join(''));
         parseInt(sumOneNum);
@@ -49,10 +79,12 @@ function clickedFunction(num){
         parseInt(sumTwoNum);
         equalSign(sumOneNum,sumTwoNum);
     }else if(num ==16){
+        displayNums.textContent = '0';
         resetValue();
     }else if(num ==17){
         clear();
     }
+
     equalLastHit = false;
 }
 
@@ -75,6 +107,7 @@ function equalSign(sumOneNum,sumTwoNum){
     resetValue();
 }
 function resetValue(){
+    firstPress = true;
     sumOneArray = [];
     sumOneNum = 0;
     sumTwoArray = [];
