@@ -7,44 +7,41 @@ let finalNum;
 let equalLastHit;
 let firstPress = true;
 
+//Sets up the display that shows numbers on screen.
 const displayPic = document.querySelector('.Display');
 const displayNums = document.createElement('p');
 displayNums.textContent = '0';
 displayPic.appendChild(displayNums);
-console.log(sumTwoArray);
 
+//if any number keys are pressed
 function clickedFunction(num){
     if(num <= 9){
-        console.log(sumTwoArray);
+        //if an operator hasn't been selected but other numbers already have
         if (operator == null && firstPress == false){
-            sumOneArray.push(num);
-            sumOneNum = Number(sumOneArray.join(''));
-            parseInt(sumOneNum);
-            displayNums.textContent = (sumOneNum);
+            ConvertSumOneToNum(num);
         }
+        //if this is the first number selected in the first numerical value 
+        //So you can start a new problem after hitting equals without reset
         if (operator == null && firstPress == true){
             sumOneArray = [];
-            sumOneArray.push(num);
-            sumOneNum = Number(sumOneArray.join(''));
-            parseInt(sumOneNum);
-            displayNums.textContent = (sumOneNum);
+            ConvertSumOneToNum(num);
             firstPress = false;
+        //if an operator has been selected then change the 2nd numerical value
         }else if(operator !=null){
             firstPress = false;
-            sumTwoArray.push(num);
-            sumTwoNum = Number(sumTwoArray.join(''));
-            parseInt(sumTwoNum);
-            displayNums.textContent = (sumTwoNum);
+            ConverSumTwoToNum(num);
         }
     }
+    //controls decimal point
     if(num == 10){
-        console.log(sumTwoArray);
+        //if the 2nd numerical value, insert decimal into 1st numerical value
         if(sumTwoArray == []){
             firstPress = false;
             sumOneArray.push('.');
             sumOneNum = Number(sumOneArray.join(''));
             parseInt(sumOneNum);
             displayNums.textContent = (sumOneNum);
+        //if the 2nd numerical value isn't empty then insert the decimal there
         }else if(sumTwoArray != []){
             firstPress = false;
             sumTwoArray.push('.');
@@ -53,7 +50,7 @@ function clickedFunction(num){
             displayNums.textContent = (sumTwoNum);
         }   
     }
-    
+    //checks operator signs and inserts them into the equation
     if(num == 13){
         operator = '+';
         sumOneNum = Number(sumOneArray.join(''));
@@ -78,16 +75,18 @@ function clickedFunction(num){
         sumTwoNum = Number(sumTwoArray.join(''));
         parseInt(sumTwoNum);
         equalSign(sumOneNum,sumTwoNum);
+    //adjusts what to do when 'CE' is hit
     }else if(num ==16){
         displayNums.textContent = '0';
         resetValue();
+    // Button for 'C'
     }else if(num ==17){
         clear();
     }
 
     equalLastHit = false;
 }
-
+//what happens when '=' is hit
 function equalSign(sumOneNum,sumTwoNum){
     displayNums.textContent =(sumTwoNum);
     if(operator == '+'){
@@ -106,6 +105,21 @@ function equalSign(sumOneNum,sumTwoNum){
     equalLastHit = true;
     resetValue();
 }
+//adding num pressed to array, joins array and converts to a number to be displayed
+function ConvertSumOneToNum(num){
+    sumOneArray.push(num);
+    sumOneNum = Number(sumOneArray.join(''));
+    parseInt(sumOneNum);
+    displayNums.textContent = (sumOneNum);
+}
+//adding num pressed to array, joins array and converts to a number to be displayed
+function ConverSumTwoToNum(num){
+    sumTwoArray.push(num);
+    sumTwoNum = Number(sumTwoArray.join(''));
+    parseInt(sumTwoNum);
+    displayNums.textContent = (sumTwoNum);
+}
+//reset everything to initial values for 'CE' button and '='
 function resetValue(){
     firstPress = true;
     sumOneArray = [];
@@ -114,12 +128,14 @@ function resetValue(){
     sumTwoNum = 0;
     operator = null;
     console.log('values reset');
+    //stores the result of last = in case the next equation works off of it
     if(equalLastHit == true){
         sumOneArray = Array.from(String(finalNum));
         sumOneNum = finalNum;
     }
     equalLastHit = false;
 }
+//clears the current numerical value
 function clear(){
     if(sumTwoArray == []){
         sumOneArray =[];
