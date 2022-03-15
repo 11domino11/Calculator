@@ -1,9 +1,9 @@
 let sumOneArray =[];
 let sumTwoArray =[];
 let operator;
-let sumOneNum;
-let sumTwoNum;
-let finalNum;
+let sumOneNum = 0;
+let sumTwoNum = 0;
+let finalNum = 0;
 let equalLastHit;
 let firstPress = true;
 
@@ -34,15 +34,15 @@ function clickedFunction(num){
     }
     //controls decimal point
     if(num == 10){
-        //if the 2nd numerical value, insert decimal into 1st numerical value
-        if(sumTwoArray == []){
+        //if the 2nd numerical value is empty, insert decimal into 1st numerical value
+        if(sumTwoNum == 0){
             firstPress = false;
             sumOneArray.push('.');
             sumOneNum = Number(sumOneArray.join(''));
             parseInt(sumOneNum);
             displayNums.textContent = (sumOneNum);
         //if the 2nd numerical value isn't empty then insert the decimal there
-        }else if(sumTwoArray != []){
+        }else if(sumTwoNum != 0){
             firstPress = false;
             sumTwoArray.push('.');
             sumTwoNum = Number(sumTwoArray.join(''));
